@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Controller</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        #current_slide {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #007BFF;
+        }
+
+        #keypoints {
+            color: #6C757D;
+        }
+
+        button {
+            font-size: 1em;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        img{
+            width:300px;
+            height:300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>OmniSync Slide Controller</h1>
+    
+    <p>Current Slide: <span id="current_slide">{{ current_slide }}</span></p>
+    <p>Key Points: <span id="keypoints">{{ keypoints }}</span></p>
+    
+    <!-- Next Button -->
+    <button onclick="controlSlide('next')">Next</button>
+    
+    <!-- Previous Button -->
+    <button onclick="controlSlide('previous')">Previous</button>
+
+    <script>
+        function controlSlide(action) {
+            // Send a request to the server to control slides
+            fetch(`/control/${action}`)
+                .then(response => response.json())
+                .then(data => updateSlideInfo(data))
+                .catch(error => console.error('Error:', error));
+        }
+    
+        function updateSlideInfo(data) {
+            // Update current slide number
+            document.getElementById('current_slide').innerText = data.current_slide;
+    
+            // Update keypoints content
+            document.getElementById('keypoints').innerText = data.keypoints;
+        }
+    </script>
+</body>
+</html>
+    
+</body>
+</html>
